@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vision 360 – Immersive 360° virtual campus tours. Explore buildings, departments and classrooms in stunning detail.">
+    <title>Vision 360 – Virtual Campus Explorer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+
+<body>
+
+    <!-- ─── HEADER ──────────────────────────────────── -->
+    <header class="header" id="home">
+        <div class="nav-container">
+            <h1 class="logo">Vision <span>360</span></h1>
+            <nav class="navbar" aria-label="Primary navigation">
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#campuses">Explore</a></li>
+                    <li><a href="#about">Learn More</a></li>
+                    <li>
+                        <a href="admin/login.html" class="btn btn-primary" style="padding:9px 22px; font-size:0.9rem; border-radius:50px;">
+                            <i class="fas fa-shield-alt"></i> Admin
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- Hamburger (mobile only) -->
+            <button class="hamburger" id="hamburger-btn" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile nav drawer -->
+    <nav class="nav-drawer" id="nav-drawer" aria-label="Mobile navigation">
+        <ul>
+            <li><a href="#home"     class="drawer-link">Home</a></li>
+            <li><a href="#campuses" class="drawer-link">Explore</a></li>
+            <li><a href="#about"    class="drawer-link">Learn More</a></li>
+            <li><a href="admin/login.html" class="btn btn-primary drawer-link">
+                <i class="fas fa-shield-alt"></i> Admin Dashboard
+            </a></li>
+        </ul>
+    </nav>
+
+    <!-- ─── HERO ─────────────────────────────────────── -->
+    <section id="home" class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-eyebrow">
+                <i class="fas fa-circle" style="font-size:0.5rem; color: var(--c-success);"></i>
+                Live Virtual Tours Available
+            </div>
+
+            <h2>
+                Explore Campus<br><em>Like Never Before</em>
+            </h2>
+
+            <p>
+                Step inside our campus with immersive 360° panoramic tours. Navigate halls, departments and classrooms from anywhere in the world.
+            </p>
+
+            <div class="hero-ctas">
+                <a href="#campuses" class="btn btn-primary" id="hero-start-btn">
+                    <i class="fas fa-street-view"></i>
+                    Start Exploring
+                </a>
+                <a href="viewer.html?tour=1" class="btn btn-outline" id="hero-tour-btn" style="border-color:rgba(0,242,254,0.4);color:var(--c-primary);">
+                    <i class="fas fa-route"></i>
+                    Virtual Tour
+                </a>
+                <a href="#about" class="btn btn-outline">
+                    <i class="fas fa-info-circle"></i>
+                    Learn More
+                </a>
+            </div>
+
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="stat-scenes">—</div>
+                    <div class="stat-label">Scenes</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">360°</div>
+                    <div class="stat-label">Panoramic</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">HD</div>
+                    <div class="stat-label">Quality</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── CAMPUS EXPLORE ───────────────────────────── -->
+    <section id="campuses" class="selection-section">
+        <div class="section-header" style="margin-bottom:36px;">
+            <span class="section-label"><i class="fas fa-map-marker-alt"></i>&nbsp; Locations</span>
+            <h2>Choose a Campus Area</h2>
+            <p>Select a building or area to begin your immersive 360° walkthrough.</p>
+        </div>
+
+        <!-- Smart Search -->
+        <div class="search-wrap">
+            <div class="search-input-row">
+                <i class="fas fa-search"></i>
+                <input type="text" id="scene-search" placeholder="Search departments, labs, classrooms…" autocomplete="off">
+                <button class="search-clear" id="search-clear-btn" title="Clear"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="search-suggestions" id="search-suggestions"></div>
+        </div>
+
+        <!-- View Controls -->
+        <div class="view-controls">
+            <div class="results-count" id="results-count"></div>
+            <div class="view-toggle">
+                <button class="view-toggle-btn active" id="btn-grid-view">
+                    <i class="fas fa-th-large"></i> Grid
+                </button>
+                <button class="view-toggle-btn" id="btn-tree-view">
+                    <i class="fas fa-sitemap"></i> Hierarchy
+                </button>
+            </div>
+        </div>
+
+        <!-- Grid View (default) -->
+        <div class="card-grid" id="building-cards-grid">
+            <div class="card-skeleton"></div>
+            <div class="card-skeleton"></div>
+            <div class="card-skeleton"></div>
+        </div>
+
+        <!-- Hierarchy Tree View -->
+        <div class="hierarchy-view" id="hierarchy-view"></div>
+
+    </section>
+
+
+    <!-- ─── ABOUT / LEARN MORE ──────────────────────── -->
+    <section id="about" style="padding: 100px 24px; position: relative; overflow: hidden;">
+
+        <!-- Background glow -->
+        <div style="position:absolute; inset:0; pointer-events:none; background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(0,242,254,0.06) 0%, transparent 70%);"></div>
+
+        <div style="max-width:1100px; margin:0 auto; position:relative; z-index:1;">
+
+            <!-- Section header -->
+            <div class="section-header" style="margin-bottom:64px;">
+                <span class="section-label"><i class="fas fa-info-circle"></i>&nbsp; About Vision 360</span>
+                <h2>Everything You Need to Know</h2>
+                <p>Vision 360 is an immersive virtual campus explorer that lets anyone navigate the entire campus — from the main entrance to individual labs — without stepping foot on site.</p>
+            </div>
+
+            <!-- How It Works -- 3 steps -->
+            <div style="margin-bottom:72px;">
+                <h3 style="text-align:center; font-size:1.05rem; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:40px;">How It Works</h3>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:28px;">
+
+                    <!-- Step 1 -->
+                    <div style="background:rgba(15,25,50,0.5); border:1px solid var(--glass-border); border-radius:var(--radius-md); padding:32px 28px; text-align:center; backdrop-filter:blur(14px); transition:var(--transition);" onmouseenter="this.style.borderColor='rgba(0,242,254,0.25)'" onmouseleave="this.style.borderColor='var(--glass-border)'">
+                        <div style="width:56px;height:56px;background:linear-gradient(135deg,var(--c-primary),var(--c-secondary));border-radius:16px;display:grid;place-items:center;font-size:1.4rem;color:#04111f;margin:0 auto 20px;box-shadow:0 10px 24px rgba(0,242,254,0.25);">
+                            <i class="fas fa-mouse-pointer"></i>
+                        </div>
+                        <div style="font-size:0.75rem;color:var(--c-primary);font-weight:700;letter-spacing:1px;margin-bottom:8px;">STEP 01</div>
+                        <h4 style="font-size:1.1rem;font-weight:700;color:var(--text-main);margin-bottom:10px;">Choose a Location</h4>
+                        <p style="color:var(--text-muted);font-size:0.92rem;line-height:1.65;">Pick any scene from the home page — Main Campus, a department, classroom, or lab. Each card shows the scene type and how many hotspots it has.</p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div style="background:rgba(15,25,50,0.5); border:1px solid var(--glass-border); border-radius:var(--radius-md); padding:32px 28px; text-align:center; backdrop-filter:blur(14px); transition:var(--transition);" onmouseenter="this.style.borderColor='rgba(79,172,254,0.25)'" onmouseleave="this.style.borderColor='var(--glass-border)'">
+                        <div style="width:56px;height:56px;background:linear-gradient(135deg,var(--c-secondary),#a78bfa);border-radius:16px;display:grid;place-items:center;font-size:1.4rem;color:#04111f;margin:0 auto 20px;box-shadow:0 10px 24px rgba(79,172,254,0.25);">
+                            <i class="fas fa-street-view"></i>
+                        </div>
+                        <div style="font-size:0.75rem;color:var(--c-secondary);font-weight:700;letter-spacing:1px;margin-bottom:8px;">STEP 02</div>
+                        <h4 style="font-size:1.1rem;font-weight:700;color:var(--text-main);margin-bottom:10px;">Explore in 360°</h4>
+                        <p style="color:var(--text-muted);font-size:0.92rem;line-height:1.65;">Drag to look around in any direction. Use pinch-to-zoom on mobile or your scroll wheel on desktop for a fully immersive panoramic experience.</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div style="background:rgba(15,25,50,0.5); border:1px solid var(--glass-border); border-radius:var(--radius-md); padding:32px 28px; text-align:center; backdrop-filter:blur(14px); transition:var(--transition);" onmouseenter="this.style.borderColor='rgba(240,147,251,0.25)'" onmouseleave="this.style.borderColor='var(--glass-border)'">
+                        <div style="width:56px;height:56px;background:linear-gradient(135deg,#f093fb,#f5576c);border-radius:16px;display:grid;place-items:center;font-size:1.4rem;color:#fff;margin:0 auto 20px;box-shadow:0 10px 24px rgba(240,147,251,0.25);">
+                            <i class="fas fa-map-signs"></i>
+                        </div>
+                        <div style="font-size:0.75rem;color:#f093fb;font-weight:700;letter-spacing:1px;margin-bottom:8px;">STEP 03</div>
+                        <h4 style="font-size:1.1rem;font-weight:700;color:var(--text-main);margin-bottom:10px;">Navigate via Hotspots</h4>
+                        <p style="color:var(--text-muted);font-size:0.92rem;line-height:1.65;">Click glowing hotspot markers inside the viewer to instantly jump to linked scenes — moving from the main campus into departments, then into classrooms and labs.</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Campus Hierarchy -->
+            <div style="margin-bottom:72px; background:rgba(15,25,50,0.4); border:1px solid var(--glass-border); border-radius:var(--radius-lg); padding:40px 36px; backdrop-filter:blur(16px);">
+                <h3 style="font-size:1.2rem;font-weight:700;color:var(--text-main);margin-bottom:6px; display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-sitemap" style="color:var(--c-primary);"></i> Campus Navigation Hierarchy
+                </h3>
+                <p style="color:var(--text-muted); font-size:0.92rem; margin-bottom:28px;">Every scene sits at a specific level. Hotspots let you move naturally between them.</p>
+
+                <!-- Hierarchy: tree layout -->
+                <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px;">
+
+                    <!-- Level 1: Main Campus -->
+                    <div style="flex:0 0 auto; min-width:150px; background:linear-gradient(135deg,rgba(0,242,254,0.12),rgba(0,242,254,0.04)); border:1px solid rgba(0,242,254,0.3); border-radius:var(--radius-sm); padding:18px 20px;">
+                        <div style="font-size:1.6rem; margin-bottom:6px;">🏫</div>
+                        <div style="font-size:0.7rem; color:var(--c-primary); font-weight:700; letter-spacing:1px; margin-bottom:4px;">LEVEL 1</div>
+                        <div style="color:var(--text-main); font-weight:700;">Main Campus</div>
+                        <div style="color:var(--text-muted); font-size:0.82rem; margin-top:4px;">Overall entry point</div>
+                    </div>
+
+                    <i class="fas fa-arrow-right" style="color:var(--c-primary); opacity:0.5; font-size:1.1rem; flex-shrink:0;"></i>
+
+                    <!-- Level 2: Department -->
+                    <div style="flex:0 0 auto; min-width:150px; background:linear-gradient(135deg,rgba(79,172,254,0.12),rgba(79,172,254,0.04)); border:1px solid rgba(79,172,254,0.3); border-radius:var(--radius-sm); padding:18px 20px;">
+                        <div style="font-size:1.6rem; margin-bottom:6px;">🏛️</div>
+                        <div style="font-size:0.7rem; color:var(--c-secondary); font-weight:700; letter-spacing:1px; margin-bottom:4px;">LEVEL 2</div>
+                        <div style="color:var(--text-main); font-weight:700;">Department</div>
+                        <div style="color:var(--text-muted); font-size:0.82rem; margin-top:4px;">CS, IT, Mechanical…</div>
+                    </div>
+
+                    <i class="fas fa-arrow-right" style="color:var(--c-secondary); opacity:0.5; font-size:1.1rem; flex-shrink:0;"></i>
+
+                    <!-- Level 3: Classrooms + Labs side by side (both branch from Department) -->
+                    <div style="display:flex; flex-direction:column; gap:10px; flex:1; min-width:150px;">
+
+                        <div style="background:linear-gradient(135deg,rgba(167,139,250,0.12),rgba(167,139,250,0.04)); border:1px solid rgba(167,139,250,0.3); border-radius:var(--radius-sm); padding:14px 18px; display:flex; align-items:center; gap:12px;">
+                            <div style="font-size:1.3rem;">🚪</div>
+                            <div>
+                                <div style="font-size:0.68rem; color:#a78bfa; font-weight:700; letter-spacing:1px; margin-bottom:3px;">LEVEL 3</div>
+                                <div style="color:var(--text-main); font-weight:700; font-size:0.95rem;">Classrooms</div>
+                                <div style="color:var(--text-muted); font-size:0.8rem;">Lecture halls, study rooms</div>
+                            </div>
+                        </div>
+
+                        <div style="background:linear-gradient(135deg,rgba(240,147,251,0.12),rgba(240,147,251,0.04)); border:1px solid rgba(240,147,251,0.3); border-radius:var(--radius-sm); padding:14px 18px; display:flex; align-items:center; gap:12px;">
+                            <div style="font-size:1.3rem;">🔬</div>
+                            <div>
+                                <div style="font-size:0.68rem; color:#f093fb; font-weight:700; letter-spacing:1px; margin-bottom:3px;">LEVEL 3</div>
+                                <div style="color:var(--text-main); font-weight:700; font-size:0.95rem;">Labs</div>
+                                <div style="color:var(--text-muted); font-size:0.8rem;">Computer, science labs</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features grid -->
+
+            <div style="margin-bottom:64px;">
+                <h3 style="text-align:center; font-size:1.05rem; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:40px;">Key Features</h3>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px;">
+
+                    <div style="background:rgba(15,25,50,0.4);border:1px solid var(--glass-border);border-radius:var(--radius-sm);padding:22px 20px;display:flex;gap:14px;align-items:flex-start;transition:var(--transition);" onmouseenter="this.style.borderColor='rgba(0,242,254,0.2)'" onmouseleave="this.style.borderColor='var(--glass-border)'">
+                        <i class="fas fa-vr-cardboard" style="font-size:1.3rem;color:var(--c-primary);flex-shrink:0;margin-top:2px;"></i>
+                        <div>
+                            <div style="font-weight:700;color:var(--text-main);margin-bottom:5px;">Full 360° Panorama</div>
+                            <div style="color:var(--text-muted);font-size:0.88rem;line-height:1.55;">Powered by Pannellum for smooth, high-quality equirectangular panorama rendering.</div>
+                        </div>
+                    </div>
+
+                    <div style="background:rgba(15,25,50,0.4);border:1px solid var(--glass-border);border-radius:var(--radius-sm);padding:22px 20px;display:flex;gap:14px;align-items:flex-start;transition:var(--transition);" onmouseenter="this.style.borderColor='rgba(0,242,254,0.2)'" onmouseleave="this.style.borderColor='var(--glass-border)'">
+                        <i class="fas fa-map-pin" style="font-size:1.3rem;color:var(--c-secondary);flex-shrink:0;margin-top:2px;"></i>
+                        <div>
+                            <div style="font-weight:700;color:var(--text-main);margin-bottom:5px;">Interactive Hotspots</div>
+                            <div style="color:var(--text-muted);font-size:0.88rem;line-height:1.55;">Clickable navigation markers placed exactly where they belong using pitch &amp; yaw coordinates.</div>
+                        </div>
+                    </div>
+
+                    <div style="background:rgba(15,25,50,0.4);border:1px solid var(--glass-border);border-radius:var(--radius-sm);padding:22px 20px;display:flex;gap:14px;align-items:flex-start;transition:var(--transition);" onmouseenter="this.style.borderColor='rgba(0,242,254,0.2)'" onmouseleave="this.style.borderColor='var(--glass-border)'">
+                        <i class="fas fa-cloud" style="font-size:1.3rem;color:#a78bfa;flex-shrink:0;margin-top:2px;"></i>
+                        <div>
+                            <div style="font-weight:700;color:var(--text-main);margin-bottom:5px;">Firebase Powered</div>
+                            <div style="color:var(--text-muted);font-size:0.88rem;line-height:1.55;">All scene data is stored and served live from Firebase Firestore. No page reload needed to see updates.</div>
+                        </div>
+                    </div>
+
+                    <div style="background:rgba(15,25,50,0.4);border:1px solid var(--glass-border);border-radius:var(--radius-sm);padding:22px 20px;display:flex;gap:14px;align-items:flex-start;transition:var(--transition);" onmouseenter="this.style.borderColor='rgba(0,242,254,0.2)'" onmouseleave="this.style.borderColor='var(--glass-border)'">
+                        <i class="fas fa-shield-alt" style="font-size:1.3rem;color:#f093fb;flex-shrink:0;margin-top:2px;"></i>
+                        <div>
+                            <div style="font-weight:700;color:var(--text-main);margin-bottom:5px;">Secure Admin Panel</div>
+                            <div style="color:var(--text-muted);font-size:0.88rem;line-height:1.55;">Master admin can create, edit and delete scenes, place hotspots, and grant access to co-admins.</div>
+                        </div>
+                    </div>
+
+                    <div style="background:rgba(15,25,50,0.4);border:1px solid var(--glass-border);border-radius:var(--radius-sm);padding:22px 20px;display:flex;gap:14px;align-items:flex-start;transition:var(--transition);" onmouseenter="this.style.borderColor='rgba(0,242,254,0.2)'" onmouseleave="this.style.borderColor='var(--glass-border)'">
+                        <i class="fas fa-mobile-alt" style="font-size:1.3rem;color:var(--c-primary);flex-shrink:0;margin-top:2px;"></i>
+                        <div>
+                            <div style="font-weight:700;color:var(--text-main);margin-bottom:5px;">Mobile Responsive</div>
+                            <div style="color:var(--text-muted);font-size:0.88rem;line-height:1.55;">Works seamlessly on phones, tablets, and desktops with gesture support for 360° dragging.</div>
+                        </div>
+                    </div>
+
+                    <div style="background:rgba(15,25,50,0.4);border:1px solid var(--glass-border);border-radius:var(--radius-sm);padding:22px 20px;display:flex;gap:14px;align-items:flex-start;transition:var(--transition);" onmouseenter="this.style.borderColor='rgba(0,242,254,0.2)'" onmouseleave="this.style.borderColor='var(--glass-border)'">
+                        <i class="fas fa-bolt" style="font-size:1.3rem;color:var(--c-secondary);flex-shrink:0;margin-top:2px;"></i>
+                        <div>
+                            <div style="font-weight:700;color:var(--text-main);margin-bottom:5px;">Instant Loading</div>
+                            <div style="color:var(--text-muted);font-size:0.88rem;line-height:1.55;">Cinematic loading screen hides delays. Scenes appear only when fully ready for a polished experience.</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- CTA Banner -->
+            <div style="text-align:center; background:linear-gradient(135deg,rgba(0,242,254,0.08),rgba(240,147,251,0.08)); border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius-lg); padding:48px 32px;">
+                <div style="font-size:2.5rem; margin-bottom:14px;">🚀</div>
+                <h3 style="font-size:1.7rem;font-weight:800;color:var(--text-main);margin-bottom:10px;letter-spacing:-0.3px;">Ready to Explore?</h3>
+                <p style="color:var(--text-muted);max-width:450px;margin:0 auto 28px;line-height:1.7;">Jump into any 360° scene and experience your campus like never before — from anywhere in the world.</p>
+                <a href="#campuses" class="btn btn-primary" style="padding:15px 36px; font-size:1rem; border-radius:50px;">
+                    <i class="fas fa-street-view"></i> Start Exploring Now
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+
+<!-- ─── FOOTER ───────────────────────────────────── -->
+    <footer class="footer" style="margin-top: 80px;">
+        <p style="margin-bottom: 8px;">
+            <strong class="gradient-text">Vision 360</strong>
+        </p>
+        <p>© 2026 Virtual Campus Explorer. Built with ♥ for immersive learning.</p>
+    </footer>
+
+    <script type="module" src="js/main.js"></script>
+    <script>
+        // Hamburger toggle
+        const btn    = document.getElementById('hamburger-btn');
+        const drawer = document.getElementById('nav-drawer');
+        btn.addEventListener('click', () => {
+            const open = drawer.classList.toggle('open');
+            btn.classList.toggle('open', open);
+            btn.setAttribute('aria-expanded', open);
+        });
+        // Close on link click
+        document.querySelectorAll('.drawer-link').forEach(l =>
+            l.addEventListener('click', () => {
+                drawer.classList.remove('open');
+                btn.classList.remove('open');
+                btn.setAttribute('aria-expanded', false);
+            })
+        );
+        // Close when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!btn.contains(e.target) && !drawer.contains(e.target)) {
+                drawer.classList.remove('open');
+                btn.classList.remove('open');
+                btn.setAttribute('aria-expanded', false);
+            }
+        });
+    </script>
+
+</body>
+</html>

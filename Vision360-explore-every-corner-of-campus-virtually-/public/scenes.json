@@ -1,0 +1,51 @@
+{
+  "main": {
+    "title": "Main Campus",
+    "type": "equirectangular",
+    "panorama": "images/campus.jpg",
+    "hotSpots": [
+      {
+        "pitch": 0,
+        "yaw": 90,
+        "type": "scene",
+        "text": "Go to Department",
+        "sceneId": "department"
+      }
+    ]
+  },
+  "department": {
+    "title": "Department",
+    "type": "equirectangular",
+    "panorama": "images/department.jpg",
+    "hotSpots": [
+      {
+        "pitch": 0,
+        "yaw": -90,
+        "type": "scene",
+        "text": "Enter Classroom",
+        "sceneId": "classroom"
+      },
+      {
+        "pitch": 0,
+        "yaw": 180,
+        "type": "scene",
+        "text": "Back to Main Campus",
+        "sceneId": "main"
+      }
+    ]
+  },
+  "classroom": {
+    "title": "Classroom",
+    "type": "equirectangular",
+    "panorama": "images/classroom.jpg",
+    "hotSpots": [
+      {
+        "pitch": 0,
+        "yaw": 180,
+        "type": "scene",
+        "text": "Back to Department",
+        "sceneId": "department"
+      }
+    ]
+  }
+}

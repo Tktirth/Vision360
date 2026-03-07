@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login – Vision 360</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="../css/style.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+    <style>
+        body { padding-top: 0; }
+
+        .login-page {
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            position: relative;
+        }
+
+        /* Radial glow accents exactly like the home hero */
+        .login-page::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 60% at 15% 20%, rgba(0, 242, 254, 0.12) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 85% 80%, rgba(240, 147, 251, 0.12) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Lock icon at top */
+        .login-icon {
+            width: 66px;
+            height: 66px;
+            background: linear-gradient(135deg, var(--c-primary), var(--c-secondary));
+            border-radius: 20px;
+            display: grid;
+            place-items: center;
+            font-size: 1.6rem;
+            color: #04111f;
+            margin: 0 auto 24px;
+            box-shadow: 0 12px 28px rgba(0, 242, 254, 0.35);
+            animation: iconBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+        }
+
+        @keyframes iconBounce {
+            from { transform: scale(0.6) rotate(-10deg); opacity: 0; }
+            to   { transform: scale(1)   rotate(0deg);   opacity: 1; }
+        }
+
+        .login-card {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 460px;
+            background: rgba(15, 25, 50, 0.6);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 52px 44px;
+            box-shadow: var(--shadow-deep);
+            text-align: center;
+            animation: cardUp 0.65s cubic-bezier(0.4, 0, 0.2, 1) both;
+        }
+
+        @keyframes cardUp {
+            from { opacity: 0; transform: translateY(24px) scale(0.97); }
+            to   { opacity: 1; transform: translateY(0)    scale(1); }
+        }
+
+        .login-logo {
+            display: inline-block;
+            font-size: 1.3rem;
+            font-weight: 900;
+            margin-bottom: 30px;
+            letter-spacing: -0.3px;
+        }
+
+        .login-logo span {
+            background: linear-gradient(90deg, var(--c-primary), var(--c-secondary));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .login-card h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--c-primary), var(--c-secondary));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .login-card > p {
+            color: var(--text-muted);
+            margin-bottom: 36px;
+            font-size: 1rem;
+        }
+
+        /* Form groups */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 9px;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.9rem;
+            letter-spacing: 0.2px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px 18px;
+            background: rgba(7, 13, 26, 0.65);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: var(--radius-sm);
+            color: var(--text-main);
+            font-size: 1rem;
+            font-family: 'Outfit', sans-serif;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .form-group input::placeholder { color: var(--text-muted); opacity: 0.55; }
+
+        .form-group input:focus {
+            border-color: var(--c-secondary);
+            background: rgba(7, 13, 26, 0.85);
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.18);
+        }
+
+        /* Buttons */
+        .btn-block {
+            width: 100%;
+            height: 54px;
+            font-size: 1.05rem;
+            margin-bottom: 14px;
+            border-radius: 50px;
+        }
+
+        #google-login-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: var(--text-main);
+            height: 54px;
+            border-radius: 50px;
+            transition: var(--transition);
+        }
+
+        #google-login-btn:hover {
+            background: rgba(255,255,255,0.09);
+            border-color: rgba(255,255,255,0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        #google-login-btn .fab { color: #ea4335; font-size: 1.25rem; }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 22px 0;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--glass-border);
+        }
+
+        .divider span {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        /* Error message */
+        #error-msg {
+            display: none;
+            background: rgba(255, 8, 68, 0.1);
+            border: 1px solid rgba(255, 8, 68, 0.25);
+            color: var(--c-danger);
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: left;
+        }
+
+        /* Back link */
+        .back-to-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 28px;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .back-to-home:hover { color: var(--c-primary); }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-page">
+        <div class="login-card">
+
+            <!-- Brand mark -->
+            <div class="login-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+
+            <span class="login-logo">Vision <span>360</span></span>
+
+            <h2>Admin Login</h2>
+            <p>Sign in to access the dashboard</p>
+
+            <!-- Error -->
+            <div id="error-msg"></div>
+
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope" style="margin-right:6px; opacity:0.5;"></i>Email</label>
+                    <input type="email" id="email" required placeholder="admin@vision360.com">
+                </div>
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock" style="margin-right:6px; opacity:0.5;"></i>Password</label>
+                    <input type="password" id="password" required placeholder="••••••••">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+            </form>
+
+            <div class="divider"><span>or continue with</span></div>
+
+            <button id="google-login-btn" class="btn btn-block">
+                <i class="fab fa-google"></i> Sign in with Google
+            </button>
+
+            <a href="../index.html" class="back-to-home">
+                <i class="fas fa-arrow-left" style="font-size:0.8rem;"></i> Back to Home
+            </a>
+
+        </div>
+    </div>
+
+    <script type="module" src="../js/admin-login.js"></script>
+
+</body>
+</html>

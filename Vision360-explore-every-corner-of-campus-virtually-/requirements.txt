@@ -1,0 +1,16 @@
+# Frontend Libraries
+
+pannellum (CDN used)
+
+# Backend / Hosting
+
+firebase-tools
+
+# Image Hosting
+
+cloudinary
+
+# Development Tools
+
+node
+npm

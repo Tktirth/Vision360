@@ -1,0 +1,39 @@
+{
+  "name": "vision360",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "node server.js",
+    "firebase:host": "npx --yes firebase-tools serve",
+    "dev": "start npm run server && npm run firebase:host"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bhumi-2303/vision360.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Bhumi-2303/vision360/issues"
+  },
+  "homepage": "https://github.com/Bhumi-2303/vision360#readme",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^7.2.0",
+    "bootstrap": "^5.3.8",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "firebase": "^12.10.0",
+    "firebase-admin": "^13.7.0",
+    "multer": "^2.1.1",
+    "pannellum": "^2.5.7"
+  },
+  "devDependencies": {
+    "eslint": "^10.0.2",
+    "prettier": "^3.8.1",
+    "vite": "^7.3.1"
+  }
+}
